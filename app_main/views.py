@@ -67,23 +67,20 @@ def teacher_update(request, id):
     teacher = get_object_or_404(User, id=id)
 
     if request.method == 'POST':
-        teacher.first_name = request.POST.get('first_name')
-        teacher.last_name = request.POST.get('last_name')
-        teacher.username = request.POST.get('username')
-        teacher.email = request.POST.get('email')
+        form = UserForm(request.POST, instance=teacher)
 
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
+        if form.is_valid() and (request.POST.get('password1') == request.POST.get('password2')):
+            teacher = form.save(commit=False)
+            teacher.set_password(request.POST.get('password2'))
+            teacher.save()
+            return redirect('teachers')
+        else:
+            return redirect('teacher_update', id=teacher.id)
 
-        if password1 and password2:
-            if password1 == password2:
-                teacher.set_password(password2)
-
-        teacher.save()
-        return redirect('teachers')
-
+    form = UserForm(instance=teacher)
     context = {
-        'teacher': teacher
+        'teacher': teacher,
+        'form': form
     }
     return render(request, 'app_main/teacher_form.html', context)
 
@@ -125,18 +122,52 @@ def student_create(request, teacher_id):
 
             return redirect('teacher_students', id=teacher_id)
 
-    # ====== How to check some hobby in students hobbies list ? ======
-    # hobby = ...
-    # filtered_students = []
-
-    # for student in Student.objects.all():
-    #     if hobby in student.hobbies.all():
-    #         filtered_students.append(student)
-    # ================================================================
-    
 
     form = StudentForm()
     context = {
-        'form': form
+        'form': form,
+        'btn_text': 'Create student',
+        'btn_color': 'green-600'
     }
-    return render(request, 'app_main/new_student.html', context)
+    return render(request, 'app_main/student_form.html', context)
+
+
+def student_update(request, student_id):
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
+    if not request.user.is_superuser:
+        return redirect('teachers')
+
+    student = get_object_or_404(Student, id=student_id)
+
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+
+        if form.is_valid():
+            form.save()
+            return redirect('teacher_students', id=student.teacher.id)
+
+    form = StudentForm(instance=student)
+    context = {
+        'form': form,
+        'btn_text': 'Update student',
+        'btn_color': 'yellow-600'
+    }
+    return render(request, 'app_main/student_form.html', context)
+
+
+def filter_students(request, hobby_id):
+    hobby = get_object_or_404(Hobby, id=hobby_id)
+
+    students = []
+    for student in Student.objects.all():
+        if hobby in student.hobbies.all():
+            students.append(student)
+    
+    context = {
+        'students': students,
+        'hobby_name': hobby.name,
+    }
+    return render(request, 'app_main/filtered_students.html', context)

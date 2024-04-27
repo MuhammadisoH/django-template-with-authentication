@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1><b>"{{ hobby_name }}"</b> hobbisiga ega bo'lgan studentlar</h1>
+
+{% for student in students %}
+    <p>{{ student }}</p> 
+{% endfor %}
+{% endblock content %}
