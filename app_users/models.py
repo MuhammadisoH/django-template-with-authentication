@@ -9,7 +9,7 @@ from .managers import UserManager
 class User(AbstractUser):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, blank=True)
     email = models.CharField(max_length=100, unique=True)
     profile_image = models.ImageField(
         upload_to='images/', default='images/profile_image.png', null=True, blank=True)

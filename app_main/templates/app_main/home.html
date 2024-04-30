@@ -1,11 +1,14 @@
-{% extends 'base.html' %}
-
-
-{% block content %}
-
-<h1>{{ full_name }}</h1>
-<a href="{% url 'teachers' %}">Teachers</a>
-
-<a href="{% url 'logout' %}">Logout</a>
-
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="mt-5 flex flex-row items-start gap-5">
+	<img class="max-w-[300px] border-2 border-black rounded" src="{{ request.user.profile_image.url }}" />
+    <div>
+        <h2 class="text-2xl">Fullname: {{ request.user.full_name }}</h2>
+        <h3 class="text-xl">Email: {{ request.user.email }}</h3>
+        {% if request.user.is_superuser %}
+        <h3 class="text-xl">Status: ⭐️⭐️⭐️ Superuser</h3>
+        {% else %}
+        <h3 class="text-xl">Status: ⭐️⭐️ Teacher</h3>
+        {% endif %}
+    </div>
+</div>
 {% endblock content %}

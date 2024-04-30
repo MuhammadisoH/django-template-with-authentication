@@ -7,12 +7,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <title>Student management</title>
 </head>
 <body>
+
+    {% include 'components/_nav.html' %}
     
-    <div class="w-[1000px] flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-    {% block content %} {% endblock content %}
+    <div class="container mx-auto">
+        {% block content %} {% endblock content %}
     </div>
 
     <script src="{% static 'script.js' %}"></script>

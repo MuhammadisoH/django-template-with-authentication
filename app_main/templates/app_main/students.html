@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block content %}    
     <div class="w-full flex flex-row justify-between items-center">
         <a href="{% url 'teachers' %}" class="border border-slate-500 rounded py-2 px-4 text-slate-500 inline-block mt-5 ms-5 hover:text-white hover:bg-slate-500 transition duration-200">Orqaga</a>
         <a href="{% url 'student_create' teacher_id=teacher.id %}" class="border border-green-600 rounded py-2 px-4 text-green-600 inline-block mt-5 ms-5 hover:text-white w-[300px] text-center hover:bg-green-600 transition duration-200">New student</a>
@@ -42,7 +42,7 @@
                         </td>
                         <td class="p-4 border border-t-0 border-b-0 border-e-0 border-slate-500 flex flex-row gap-2">
                            <a href="{% url 'student_update' student_id=student.id %}" class="inline-block border border-yellow-600 rounded py-1 px-2 text-yellow-600 hover:bg-yellow-600 hover:text-white transition duration-200">Update</a>
-                           <a href="" class="inline-block border border-red-600 rounded py-1 px-2 text-red-600 hover:bg-red-600 hover:text-white transition duration-200">Delete</a>
+                           <a href="{% url 'student_delete' student_id=student.id %}" class="inline-block border border-red-600 rounded py-1 px-2 text-red-600 hover:bg-red-600 hover:text-white transition duration-200">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}
