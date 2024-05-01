@@ -1,6 +1,12 @@
-{% load static %}
+% extends 'base.html' %} {% load static %} {% block content %}
+<div class="mt-5 flex flex-row items-start gap-5">
+	<img class="max-w-[300px] border-2 border-black rounded" src="{{ request.user.profile_image.url }}" />
+    <div>
 <!DOCTYPE html>
 <html lang="en">
+	<div class="mt-5 flex flex-row items-start gap-5">
+		<img class="max-w-[300px] border-2 border-black rounded" src="{{ request.user.profile_image.url }}" />
+		<div>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />

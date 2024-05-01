@@ -206,3 +206,11 @@ def filter_students(request, hobby_id):
         'hobby_name': hobby.name,
     }
     return render(request, 'app_main/filtered_students.html', context)
+
+
+def student_detail(request, id):
+    student = get_object_or_404(Student, id=id)
+    context = {
+        'student': student 
+    }
+    return render(request, 'app_main/student.html', context)
